@@ -19,7 +19,7 @@ RUN groupadd -g 1000 ivorysql; \
 RUN mkdir /docker-entrypoint-initdb.d
 
 ENV IVORY_MAJOR 5
-ENV IVORY_VERSION 5.3
+ENV IVORY_VERSION 5.4
 
 RUN curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-8.repo; \
     sed -i -e '/mirrors.cloud.aliyuncs.com/d' -e '/mirrors.aliyuncs.com/d' /etc/yum.repos.d/CentOS-Base.repo
@@ -66,6 +66,7 @@ RUN mkdir -p /usr/src/ivorysql; \
             --with-icu \
     ; \
     make && make install; \
+    make -C contrib install;\
     rm -rf \
 		/usr/src/ivorysql \
 		/usr/local/share/doc \
@@ -89,7 +90,7 @@ COPY --from=builder --chown=ivorysql:ivorysql /var/local/ivorysql /var/local/ivo
 COPY --from=builder --chown=ivorysql:ivorysql /usr/local/bin/gosu /usr/local/bin/gosu
 
 ENV IVORY_MAJOR 5
-ENV IVORY_VERSION 5.3
+ENV IVORY_VERSION 5.4
 
 RUN mkdir /docker-entrypoint-initdb.d
 

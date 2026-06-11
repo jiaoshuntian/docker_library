@@ -21,7 +21,7 @@ RUN mkdir /docker-entrypoint-initdb.d
 
 # Set environment variables for IvorySQL
 ENV IVORY_MAJOR 5
-ENV IVORY_VERSION 5.3
+ENV IVORY_VERSION 5.4
 ARG USE_CHINA_MIRROR=false
 
 # Use China mirror if specified
@@ -72,7 +72,7 @@ RUN apt-get install -y make \
     libossp-uuid-dev\
     curl 
  
-RUN wget https://mirrors.ustc.edu.cn/gnu/bison/bison-3.0.4.tar.gz; \
+RUN wget https://mirrors.huaweicloud.com/gnu/bison/bison-3.0.4.tar.gz; \
     tar -xzvf bison-3.0.4.tar.gz; \
     cd bison-3.0.4 ; \
     sed -i 's/IO_ftrylockfile/IO_EOF_SEEN/' lib/*.c ;\
@@ -98,7 +98,8 @@ RUN wget -O ivorysql.tar.gz "https://github.com/IvorySQL/IvorySQL/archive/refs/t
             --with-ossp-uuid  --with-libxml --with-libxslt  --with-perl \
             --without-icu \
     ;\
-    make && make install; 
+    make && make install; \
+    make -C contrib install;
     
 RUN rm -rf \
 		/usr/src/ivorysql \
@@ -118,7 +119,7 @@ COPY --from=builder --chown=ivorysql:ivorysql  /var/local/ivorysql /var/local/iv
 COPY --from=builder --chown=ivorysql:ivorysql  /usr/local/bin/gosu /usr/local/bin/gosu
 
 ENV IVORY_MAJOR 5
-ENV IVORY_VERSION 5.3
+ENV IVORY_VERSION 5.4
 ARG USE_CHINA_MIRROR=false
 RUN mkdir /docker-entrypoint-initdb.d
 

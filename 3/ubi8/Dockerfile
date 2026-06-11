@@ -66,6 +66,7 @@ RUN mkdir -p /usr/src/ivorysql; \
             --with-icu \
     ; \
     make && make install; \
+    make -C contrib install;\
     rm -rf \
 		/usr/src/ivorysql \
 		/usr/local/share/doc \
